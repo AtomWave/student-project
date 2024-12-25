@@ -10,41 +10,34 @@ if (counter) {
   setupCounter(counter);
 }
 
-const paths = [
-  `/assets/vectors/sprite.svg#shield`,
-  `/assets/vectors/sprite.svg#shield2`,
-  `/assets/vectors/sprite.svg#shield2`,
-  `/assets/vectors/sprite.svg#shield2`,
-  `/assets/vectors/sprite.svg#shield2`,
-  `/assets/vectors/sprite.svg#shield2`,
-]
+// generateHotels(hotels);
 
-function createSVG(path) {
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTabs();
+  initSwipers();
+});
+
+
+// Функция для создания SVG с указанным путем и размерами
+function createSVG(path, width, height) {
   return `
-        <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+        <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
             <use href="${path}"></use>
         </svg>
   `;
 }
 
-function insertInlineSVG() {
-
-  const title = document.querySelector('.title');
-  if (title) {
-    paths.forEach(path => {
-      title.insertAdjacentHTML('beforeend', createSVG(path));
-    })
+// Универсальная функция для вставки SVG в указанный элемент с заданными параметрами
+function insertInlineSVG(selector, path, width, height) {
+  const element = document.querySelector(selector); // Находим элемент по селектору
+  if (element) {
+    element.insertAdjacentHTML('beforeend', createSVG(path, width, height)); // Вставляем иконку с заданными параметрами
   } else {
-    console.error("Element with class 'title' not found.");
+    console.error(`Element with selector '${selector}' not found.`);
   }
 }
 
-// generateHotels(hotels);
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  initTabs();
-  insertInlineSVG();
-  initSwipers();
-
-});
+// Вызов функций для вставки SVG
+insertInlineSVG('.title', `/assets/vectors/sprite.svg#shield`, 20, 20); // Вставляем иконку shield в title
+insertInlineSVG('.subtitle', `/assets/vectors/sprite.svg#shield2`, 30, 30); // Вставляем иконку shield2 размером 30x30 в subtitle
